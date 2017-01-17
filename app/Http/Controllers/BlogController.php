@@ -61,4 +61,6 @@ class BlogController extends Controller
         Blog::find($req->id)->delete();
         return response()->json();
     }
+    public function proba(){
+    }
 }

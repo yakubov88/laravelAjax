@@ -15,7 +15,7 @@ use Image;
 class BlogController extends Controller
 {
     public function index(Request $request){
-        // we need to show all data from "blog" table
+        
             if (Auth::check()) {
                 $search = $request->get('search');
                 $blogs = Blog::where('title','like','%'.$search.'%')->orderBy('id')->paginate(3);

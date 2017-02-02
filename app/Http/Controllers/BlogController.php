@@ -19,7 +19,6 @@ class BlogController extends Controller
             if (Auth::check()) {
                 $search = $request->get('search');
                 $blogs = Blog::where('title','like','%'.$search.'%')->orderBy('id')->paginate(3);
-                //new commit//
                 return view('blog.index',['blogs' => $blogs]);
             }
             else{

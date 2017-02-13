@@ -26,7 +26,8 @@
             <div class="navbar-header">
 
                 <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#app-navbar-collapse">
                     <span class="sr-only">Toggle Navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -54,8 +55,10 @@
                     @else
                         <li class="dropdown">
 
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="position: relative; padding-left: 50px;  ">
-                                <img src="/uploads/avatars/{{Auth::user()->avatar}}" style="width: 32px; height: 32px; position: absolute; top: 10px; left: 10px; border-radius: 50%">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false" style="position: relative; padding-left: 50px;  ">
+                                <img src="/uploads/avatars/{{Auth::user()->avatar}}"
+                                     style="width: 32px; height: 32px; position: absolute; top: 10px; left: 10px; border-radius: 50%">
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 
@@ -70,7 +73,8 @@
                                         <i class="fa fa-btn fa-sign-out"></i> Logout
                                     </a>
 
-                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST"
+                                          style="display: none;">
                                         {{ csrf_field() }}
                                     </form>
                                 </li>
@@ -95,7 +99,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     // Edit Data (Modal and function edit data)
-    $(document).on('click', '.edit-modal', function() {
+    $(document).on('click', '.edit-modal', function () {
         $('#footer_action_button').text(" Update");
         $('#footer_action_button').addClass('glyphicon-check');
         $('#footer_action_button').removeClass('glyphicon-trash');
@@ -110,7 +114,7 @@
         $('#d').val($(this).data('description'));
         $('#myModal').modal('show');
     });
-    $('.modal-footer').on('click', '.edit', function() {
+    $('.modal-footer').on('click', '.edit', function () {
         $.ajax({
             type: 'post',
             url: '/editItem',
@@ -120,13 +124,20 @@
                 'title': $('#t').val(),
                 'description': $('#d').val()
             },
-            success: function(data) {
-                $('.item' + data.id).replaceWith("<tr class='item" + data.id + "'><td>" + data.id + "</td><td>" + data.title + "</td><td>" + data.description + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-title='" + data.title + "' data-description='" + data.description + "'><span class='glyphicon glyphicon-edit'></span> Edit</button> <button class='delete-modal btn btn-danger' data-id='" + data.id + "' data-title='" + data.title + "' data-description='" + data.description + "'><span class='glyphicon glyphicon-trash'></span> Delete</button></td></tr>");
+            success: function (data) {
+                $('.item' + data.id).replaceWith("<tr class='item" + data.id + "'>" +
+                    "<td>" + data.id + "</td>" +
+                    "<td>" + data.title + "</td>" +
+                    "<td>" + data.description + "</td>" +
+                    "<td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-title='" + data.title + "' data-description='" + data.description + "'>" +
+                    "<span class='glyphicon glyphicon-edit'></span> Edit</button> " +
+                    "<button class='delete-modal btn btn-danger' data-id='" + data.id + "' data-title='" + data.title + "' data-description='" + data.description + "'>" +
+                    "<span class='glyphicon glyphicon-trash'></span> Delete</button></td></tr>");
             }
         });
     });
     // add function
-    $("#add").click(function() {
+    $("#add").click(function () {
         $.ajax({
             type: 'post',
             url: '/addItem',
@@ -135,7 +146,7 @@
                 'title': $('input[name=title]').val(),
                 'description': $('input[name=description]').val()
             },
-            success: function(data) {
+            success: function (data) {
                 if ((data.errors)) {
                     $('.error').removeClass('hidden');
                     $('.error').text(data.errors.title);
@@ -151,7 +162,7 @@
     });
 
     //delete function
-    $(document).on('click', '.delete-modal', function() {
+    $(document).on('click', '.delete-modal', function () {
         $('#footer_action_button').text(" Delete");
         $('#footer_action_button').removeClass('glyphicon-check');
         $('#footer_action_button').addClass('glyphicon-trash');
@@ -166,7 +177,7 @@
         $('#myModal').modal('show');
     });
 
-    $('.modal-footer').on('click', '.delete', function() {
+    $('.modal-footer').on('click', '.delete', function () {
         $.ajax({
             type: 'post',
             url: '/deleteItem',
@@ -174,7 +185,7 @@
                 '_token': $('input[name=_token]').val(),
                 'id': $('.id').text()
             },
-            success: function(data) {
+            success: function (data) {
                 $('.item' + $('.id').text()).remove();
             }
         });

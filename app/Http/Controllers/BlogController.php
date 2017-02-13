@@ -14,22 +14,23 @@ use Image;
 
 class BlogController extends Controller
 {
-    public function index(Request $request){
-        
-            if (Auth::check()) {
-                $search = $request->get('search');
-                $blogs = Blog::where('title','like','%'.$search.'%')->orderBy('id')->paginate(3);
-                //second commit//
-                return view('blog.index',['blogs' => $blogs]);
-            }
-            else{
-                return redirect()->route('login');
-            }
+    public function index(Request $request)
+    {
+
+        if (Auth::check()) {
+            $search = $request->get('search');
+            $blogs = Blog::where('title', 'like', '%' . $search . '%')->orderBy('id')->paginate(3);
+
+            return view('blog.index', ['blogs' => $blogs]);
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     // edit data function
-    public function editItem(Request $req) {
-        $blog = Blog::find ($req->id);
+    public function editItem(Request $req)
+    {
+        $blog = Blog::find($req->id);
         $blog->title = $req->title;
         $blog->description = $req->description;
         $blog->save();
@@ -37,13 +38,14 @@ class BlogController extends Controller
     }
 
     // add data into database
-    public function addItem(Request $req) {
+    public function addItem(Request $req)
+    {
         $rules = array(
             'title' => 'required',
             'description' => 'required'
         );
         // for Validator
-        $validator = Validator::make ( Input::all (), $rules );
+        $validator = Validator::make(Input::all(), $rules);
         if ($validator->fails())
             return Response::json(array('errors' => $validator->getMessageBag()->toArray()));
 
@@ -57,11 +59,15 @@ class BlogController extends Controller
             return response()->json($blog);
         }
     }
+
     // delete item
-    public function deleteItem(Request $req) {
+    public function deleteItem(Request $req)
+    {
         Blog::find($req->id)->delete();
         return response()->json();
     }
-    public function proba(){
+
+    public function proba()
+    {
     }
 }
